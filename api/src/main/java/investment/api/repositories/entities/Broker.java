@@ -9,19 +9,19 @@ import jakarta.persistence.Id;
 public class Broker {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Broker_Id;
 
     private String username;
 
     private String company;
 
-    private String passwordHash;
+    private byte[] passwordHash;
 
-    private String passwordSalt;
+    private byte[] passwordSalt;
 
     public Broker() { }
-    public Broker(String username, String company, String passwordHash, String passwordSalt) {
+    public Broker(String username, String company, byte[] passwordHash, byte[] passwordSalt) {
         this.username = username;
         this.company = company;
         this.passwordHash = passwordHash;
