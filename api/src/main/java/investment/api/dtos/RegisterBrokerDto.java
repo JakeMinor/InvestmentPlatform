@@ -3,11 +3,6 @@ package investment.api.dtos;
 import lombok.Data;
 
 @Data
-public class RegisterBrokerDto {
-    private String username;
-
+public class RegisterBrokerDto extends LoginBrokerDto {
     private String company;
-
-    private String password;
-
 }

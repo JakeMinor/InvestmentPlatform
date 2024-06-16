@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 public class AuthenticationBusiness {
@@ -19,14 +21,28 @@ public class AuthenticationBusiness {
 
     public AuthenticationBusiness() { }
 
-    public HashedPasswordDto hashPassword(String passwordToHash) {
+    public HashedPasswordDto hashPassword(String passwordToHash, Optional<byte[]> passwordSalt) {
         byte[] salt = new byte[32];
-        secureRandom.nextBytes(salt);
+
+        if(passwordSalt.isPresent()) {
+            salt = passwordSalt.get();
+        } else {
+            secureRandom.nextBytes(salt);
+        }
 
         messageDigest.update(salt);
 
-        // Password Hash is too big, think I might need to store the Password Hash without the salt or find a way of setting a max size.
-        return new HashedPasswordDto(messageDigest.digest(passwordToHash.getBytes(StandardCharsets.UTF_8)), salt);
+        byte[] hashedPassword = messageDigest.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
+
+        return new HashedPasswordDto(hashedPassword, salt);
+    }
+
+    public boolean doesPasswordMatch(String password, byte[] hashedPassword, byte[] salt) {
+        HashedPasswordDto passwordToCompare = this.hashPassword(password, Optional.ofNullable(salt));
+
+        byte[] p = Arrays.copyOf(hashedPassword, passwordToCompare.getHashedPassword().length);
+
+        return Arrays.equals(p, passwordToCompare.getHashedPassword());
     }
 
 }

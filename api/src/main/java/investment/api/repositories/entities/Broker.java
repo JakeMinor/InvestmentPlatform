@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
 
 @Entity
 public class Broker {
@@ -12,12 +13,16 @@ public class Broker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Broker_Id;
 
+    @Getter
     private String username;
 
+    @Getter
     private String company;
 
+    @Getter
     private byte[] passwordHash;
 
+    @Getter
     private byte[] passwordSalt;
 
     public Broker() { }
