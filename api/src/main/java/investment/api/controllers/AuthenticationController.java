@@ -1,10 +1,15 @@
 package investment.api.controllers;
 
 import investment.api.business.BrokerBusiness;
-import investment.api.dtos.LoginBrokerDto;
+import investment.api.dtos.LoginUserDto;
 import investment.api.dtos.RegisterBrokerDto;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("http://localhost:8080")
 public class AuthenticationController {
 
-    private BrokerBusiness brokerBusiness;
+    private final BrokerBusiness brokerBusiness;
 
     @Autowired
     public AuthenticationController(BrokerBusiness brokerBusiness) {
@@ -24,8 +29,8 @@ public class AuthenticationController {
        return brokerBusiness.registerBroker(broker);
     }
 
-    @PostMapping("/signin-broker")
-    public ResponseEntity<?> loginBroker(@RequestBody LoginBrokerDto broker) {
-        return brokerBusiness.loginBroker(broker);
+    @PostMapping("/login-broker")
+    public ResponseEntity<String> loginBroker(@RequestBody LoginUserDto brokerLogin) {
+        return brokerBusiness.loginBroker(brokerLogin);
     }
 }
