@@ -10,14 +10,18 @@ import java.util.Arrays;
 public class UserDto extends User {
 
     @Getter
+    private int broker_id;
+
+    @Getter
     private byte[] passwordHash;
 
     @Getter
     private byte[] salt;
 
-    public UserDto(String username, byte[] password, byte[] salt) {
+    public UserDto(String username, int broker_id, byte[] password, byte[] salt) {
         super(username, Arrays.toString(password), new ArrayList<GrantedAuthority>());
 
+        this.broker_id = broker_id;
         this.passwordHash = password;
         this.salt = salt;
     }

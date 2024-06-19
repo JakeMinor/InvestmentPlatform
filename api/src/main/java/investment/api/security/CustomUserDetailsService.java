@@ -28,6 +28,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         password = Arrays.copyOf(password, rlen);
 
-        return new UserDto(broker.getUsername(), password, broker.getPasswordSalt());
+        return new UserDto(broker.getUsername(), broker.getId(), password, broker.getPasswordSalt());
     }
 }

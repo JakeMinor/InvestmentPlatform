@@ -1,17 +1,18 @@
 package investment.api.repositories.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
+
+import java.util.Collection;
 
 @Entity
 public class Broker {
 
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Broker_Id;
+    @Column(name = "broker_id")
+    private int id;
 
     @Getter
     private String username;
@@ -24,6 +25,9 @@ public class Broker {
 
     @Getter
     private byte[] passwordSalt;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "broker")
+    private Collection<Asset> assets;
 
     public Broker() { }
     public Broker(String username, String company, byte[] passwordHash, byte[] passwordSalt) {
