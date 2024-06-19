@@ -3,9 +3,8 @@ package investment.api.controllers;
 import investment.api.business.BrokerBusiness;
 import investment.api.repositories.entities.Broker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +16,12 @@ public class BrokerController {
     BrokerBusiness brokerBusiness;
 
     @GetMapping("/")
-    public List<Broker> getAllBrokers() {
+    public ResponseEntity<List<Broker>> getAllBrokers() {
         return brokerBusiness.getAllBrokers();
+    }
+
+    @DeleteMapping("/delete-broker/{id}")
+    public ResponseEntity<String> deleteBroker(@PathVariable int id) {
+        return brokerBusiness.deleteBroker(id);
     }
 }
