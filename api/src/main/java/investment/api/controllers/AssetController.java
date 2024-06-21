@@ -1,17 +1,10 @@
 package investment.api.controllers;
 
 import investment.api.business.AssetBusiness;
-import investment.api.business.BrokerBusiness;
-import investment.api.repositories.AssetRepository;
+import investment.api.dtos.AssetDto;
 import investment.api.repositories.entities.Asset;
-import investment.api.repositories.entities.Broker;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -31,5 +24,8 @@ public class AssetController {
         return assetBusiness.getAssets(principal);
     }
 
-
+    @PostMapping("/")
+    public ResponseEntity createAsset(@RequestBody AssetDto asset, Principal principal) {
+        return assetBusiness.createAsset(asset, principal);
+    }
 }
