@@ -1,8 +1,9 @@
 package investment.api.controllers;
 
 import investment.api.business.AuthenticationBusiness;
-import investment.api.dtos.LoginUserDto;
+import investment.api.dtos.LoginDto;
 import investment.api.dtos.RegisterBrokerDto;
+import investment.api.dtos.RegisterInvestorDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +24,13 @@ public class AuthenticationController {
        return authenticationBusiness.registerBroker(broker);
     }
 
-    @PostMapping("/login-broker")
-    public ResponseEntity<String> loginBroker(@RequestBody LoginUserDto brokerLogin) {
-        return authenticationBusiness.loginBroker(brokerLogin);
     @PostMapping("/register-investor")
     public ResponseEntity<String> registerInvestor(@RequestBody RegisterInvestorDto investor) {
         return authenticationBusiness.registerInvestor(investor);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginBroker(@RequestBody LoginDto userDto) {
+        return authenticationBusiness.login(userDto);
     }
 }

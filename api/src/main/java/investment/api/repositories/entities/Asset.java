@@ -1,6 +1,6 @@
 package investment.api.repositories.entities;
 
-import investment.api.dtos.AssetKindEnum;
+import investment.api.enums.AssetKindEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,5 +1,6 @@
 package investment.api.dtos;
 
+import investment.api.enums.AssetKindEnum;
 import lombok.Data;
 
 @Data

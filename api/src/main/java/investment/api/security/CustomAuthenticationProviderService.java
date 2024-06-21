@@ -1,6 +1,7 @@
 package investment.api.security;
 
 import investment.api.dtos.UserDto;
+import investment.api.enums.UserTypeEnum;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,7 +31,7 @@ public class CustomAuthenticationProviderService implements AuthenticationManage
         try {
             user = customUserDetailsService.loadUserByUsername(authentication.getName());
         } catch (Exception e) {
-            throw new BadCredentialsException("Invalid username");
+            throw new BadCredentialsException("Invalid Username or Password");
         }
 
         var hashedPassword = passwordEncoder.hashPassword(authentication.getCredentials().toString(), Optional.ofNullable(user.getSalt()));
@@ -38,7 +39,7 @@ public class CustomAuthenticationProviderService implements AuthenticationManage
         var s = user.getPasswordHash();
 
         if(!passwordEncoder.matches(s, hashedPassword.getHashedPassword())) {
-            throw new BadCredentialsException("Invalid password");
+            throw new BadCredentialsException("Invalid Username or Password");
         }
 
         return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString());

@@ -1,4 +1,4 @@
-package investment.api.dtos;
+package investment.api.enums;
 
 public enum AssetKindEnum {
 

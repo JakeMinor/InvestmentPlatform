@@ -1,10 +1,13 @@
 package investment.api.business;
 
 import investment.api.dtos.HashedPasswordDto;
-import investment.api.dtos.LoginUserDto;
+import investment.api.dtos.LoginDto;
 import investment.api.dtos.RegisterBrokerDto;
+import investment.api.dtos.RegisterInvestorDto;
 import investment.api.repositories.BrokerRepository;
+import investment.api.repositories.InvestorRepository;
 import investment.api.repositories.entities.Broker;
+import investment.api.repositories.entities.Investor;
 import investment.api.security.CustomPasswordEncoder;
 import investment.api.services.TokenService;
 import org.springframework.http.HttpStatus;
@@ -46,7 +49,6 @@ public class AuthenticationBusiness {
         return new ResponseEntity<>("Broker registered successfully!", HttpStatus.OK);
     }
 
-    public ResponseEntity<String> loginBroker(LoginUserDto brokerDetails) {
     public ResponseEntity<String> registerInvestor(RegisterInvestorDto investorDto) {
         if(investorRepository.existsByUsername(investorDto.getUsername())) {
             return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
@@ -60,10 +62,12 @@ public class AuthenticationBusiness {
 
         return new ResponseEntity<>("Investor registered successfully!", HttpStatus.OK);
     }
+
+    public ResponseEntity<String> login(LoginDto userDetails) {
         try {
 
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(brokerDetails.getUsername(), brokerDetails.getPassword()));
+                    new UsernamePasswordAuthenticationToken(userDetails.getUsername() + ":" + userDetails.getUserType().toString(), userDetails.getPassword()));
 
             return new ResponseEntity<>(tokenService.generateToken(authentication), HttpStatus.OK);
         } catch(BadCredentialsException e) {
