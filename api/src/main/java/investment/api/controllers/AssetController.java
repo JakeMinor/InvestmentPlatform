@@ -19,7 +19,7 @@ public class AssetController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Asset>> getAllAssets(Principal principal) {
+    public ResponseEntity<List<AssetDto>> getAllAssets(Principal principal) {
         return assetBusiness.getAssets(principal);
     }
 

@@ -28,10 +28,20 @@ public class AssetBusiness {
         this.userDetailsService = userDetailsService;
     }
 
-    public ResponseEntity<List<Asset>> getAssets(Principal principal) {
+    public ResponseEntity<List<AssetDto>> getAssets(Principal principal) {
         UserDto user = userDetailsService.loadUserByUsername(principal.getName());
 
-        return new ResponseEntity<>(assetRepository.findAssetsByBroker_id(user.getBroker().getId()), HttpStatus.OK);
+        var assets = assetRepository.findAssetsByBroker_id(user.getBroker().getId())
+                .stream()
+                .map(asset ->
+                        new AssetDto(asset.getAsset_id(),
+                                asset.getBroker().getId(),
+                                AssetKindEnum.valueOf(asset.getKind().toUpperCase()),
+                                asset.getName()
+                        )
+                );
+
+        return new ResponseEntity<>(assets.toList(), HttpStatus.OK);
     }
 
     public ResponseEntity createAsset(AssetDto asset, Principal principal) {
