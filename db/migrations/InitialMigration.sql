@@ -3,7 +3,7 @@ CREATE TABLE investor (
                           username VARCHAR(20) NOT NULL UNIQUE,
                           firstname VARCHAR(20) NOT NULL,
                           lastname VARCHAR(20) NOT NULL,
-                          password_hash BINARY(20) NOT NULL,
+                          password_hash BINARY(128) NOT NULL,
                           password_salt BINARY(32) NOT NULL
 ) CHARACTER SET utf8mb4;
 
@@ -11,7 +11,7 @@ CREATE TABLE broker (
                         broker_id INT AUTO_INCREMENT PRIMARY KEY,
                         username VARCHAR(20) NOT NULL UNIQUE,
                         company VARCHAR(20) NOT NULL,
-                        password_hash BINARY(20) NOT NULL,
+                        password_hash BINARY(128) NOT NULL,
                         password_salt BINARY(32) NOT NULL
 ) CHARACTER SET utf8mb4;
 

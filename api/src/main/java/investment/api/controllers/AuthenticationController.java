@@ -26,5 +26,9 @@ public class AuthenticationController {
     @PostMapping("/login-broker")
     public ResponseEntity<String> loginBroker(@RequestBody LoginUserDto brokerLogin) {
         return authenticationBusiness.loginBroker(brokerLogin);
+    @PostMapping("/register-investor")
+    public ResponseEntity<String> registerInvestor(@RequestBody RegisterInvestorDto investor) {
+        return authenticationBusiness.registerInvestor(investor);
+    }
     }
 }

@@ -19,12 +19,14 @@ import org.springframework.stereotype.Service;
 public class AuthenticationBusiness {
 
     private final BrokerRepository brokerRepository;
+    private final InvestorRepository investorRepository;
     private final CustomPasswordEncoder customPasswordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
-    public AuthenticationBusiness(BrokerRepository brokerRepository, CustomPasswordEncoder customPasswordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public AuthenticationBusiness(BrokerRepository brokerRepository, InvestorRepository investorRepository, CustomPasswordEncoder customPasswordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.brokerRepository = brokerRepository;
+        this.investorRepository = investorRepository;
         this.customPasswordEncoder = customPasswordEncoder;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
@@ -45,6 +47,19 @@ public class AuthenticationBusiness {
     }
 
     public ResponseEntity<String> loginBroker(LoginUserDto brokerDetails) {
+    public ResponseEntity<String> registerInvestor(RegisterInvestorDto investorDto) {
+        if(investorRepository.existsByUsername(investorDto.getUsername())) {
+            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
+        }
+
+        HashedPasswordDto hashedPasswordDto = customPasswordEncoder.hashPassword(investorDto.getPassword(), java.util.Optional.empty());
+
+        Investor investor = new Investor(investorDto.getUsername(), investorDto.getFirstName(), investorDto.getLastName(), hashedPasswordDto.getHashedPassword(), hashedPasswordDto.getSalt());
+
+        investorRepository.save(investor);
+
+        return new ResponseEntity<>("Investor registered successfully!", HttpStatus.OK);
+    }
         try {
 
             Authentication authentication = authenticationManager.authenticate(
