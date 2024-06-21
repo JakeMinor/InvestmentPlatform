@@ -2,7 +2,6 @@ package investment.api.controllers;
 
 import investment.api.business.AssetBusiness;
 import investment.api.dtos.AssetDto;
-import investment.api.repositories.entities.Asset;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,5 +26,10 @@ public class AssetController {
     @PostMapping("/")
     public ResponseEntity createAsset(@RequestBody AssetDto asset, Principal principal) {
         return assetBusiness.createAsset(asset, principal);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBroker(@PathVariable int id) {
+        return assetBusiness.deleteAsset(id);
     }
 }

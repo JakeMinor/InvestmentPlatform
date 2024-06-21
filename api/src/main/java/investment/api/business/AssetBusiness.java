@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.util.EnumUtils;
 
 import java.security.Principal;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -38,6 +37,18 @@ public class AssetBusiness {
     public ResponseEntity createAsset(AssetDto asset, Principal principal) {
         UserDto user = userDetailsService.loadUserByUsername(principal.getName());
 
-        return new ResponseEntity<>(assetRepository.save(new Asset(user.getBroker(), asset.getKind(), asset.getName())), HttpStatus.CREATED);
+        assetRepository.save(new Asset(user.getBroker(), asset.getKind(), asset.getName()));
+
+        return new ResponseEntity<>("Asset created", HttpStatus.CREATED);
+    }
+
+    public ResponseEntity deleteAsset(int id) {
+        if(!assetRepository.existsById(id)) {
+            return new ResponseEntity<>("Asset doesn't exist.", HttpStatus.BAD_REQUEST);
+        }
+
+        assetRepository.deleteById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
