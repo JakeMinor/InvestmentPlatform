@@ -23,6 +23,10 @@ public class BrokerBusiness {
     }
 
     public ResponseEntity<String> deleteBroker(int brokerId) {
+        if(!brokerRepository.existsById(brokerId)) {
+            return new ResponseEntity<>("Broker doesn't exist.", HttpStatus.BAD_REQUEST);
+        }
+
         brokerRepository.deleteById(brokerId);
 
         return new ResponseEntity<>(HttpStatus.OK);
