@@ -8,11 +8,15 @@ import investment.api.repositories.entities.Investor;
 import org.hibernate.query.sqm.sql.ConversionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Objects;
 
 @Service
@@ -31,11 +35,19 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if(Objects.equals(userType, "BROKER")) {
             Broker broker = brokerRepository.findByUsername(name);
-            return new UserDto(broker.getUsername(), broker, formatPassword(broker.getPasswordHash()), broker.getPasswordSalt());
+
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_BROKER"));
+
+            return new UserDto(broker.getUsername(), broker, formatPassword(broker.getPasswordHash()), broker.getPasswordSalt(), authorities);
         }
         else {
             Investor investor = InvestorRepository.findByUsername(name);
-            return new UserDto(investor.getUsername(), investor, formatPassword(investor.getPasswordHash()), investor.getPasswordSalt());
+
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_INVESTOR"));
+
+            return new UserDto(investor.getUsername(), investor, formatPassword(investor.getPasswordHash()), investor.getPasswordSalt(), authorities);
         }
     }
 

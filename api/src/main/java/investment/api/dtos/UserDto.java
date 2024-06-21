@@ -24,16 +24,16 @@ public class UserDto extends User {
     @Getter
     private byte[] salt;
 
-    public UserDto(String username, Broker broker, byte[] password, byte[] salt) {
-        super(username, Arrays.toString(password), new ArrayList<GrantedAuthority>());
+    public UserDto(String username, Broker broker, byte[] password, byte[] salt, Collection<? extends GrantedAuthority> authorities) {
+        super(username, Arrays.toString(password), authorities);
 
         this.broker = broker;
         this.passwordHash = password;
         this.salt = salt;
     }
 
-    public UserDto(String username, Investor investor, byte[] password, byte[] salt) {
-        super(username, Arrays.toString(password), new ArrayList<GrantedAuthority>());
+    public UserDto(String username, Investor investor, byte[] password, byte[] salt, Collection<? extends GrantedAuthority> authorities) {
+        super(username, Arrays.toString(password), authorities);
         this.investor = investor;
         this.passwordHash = password;
         this.salt = salt;

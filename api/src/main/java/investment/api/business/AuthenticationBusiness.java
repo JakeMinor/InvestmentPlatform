@@ -9,7 +9,7 @@ import investment.api.repositories.InvestorRepository;
 import investment.api.repositories.entities.Broker;
 import investment.api.repositories.entities.Investor;
 import investment.api.security.CustomPasswordEncoder;
-import investment.api.services.TokenService;
+import investment.api.security.JwtTokenProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,9 +25,9 @@ public class AuthenticationBusiness {
     private final InvestorRepository investorRepository;
     private final CustomPasswordEncoder customPasswordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
+    private final JwtTokenProvider tokenService;
 
-    public AuthenticationBusiness(BrokerRepository brokerRepository, InvestorRepository investorRepository, CustomPasswordEncoder customPasswordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public AuthenticationBusiness(BrokerRepository brokerRepository, InvestorRepository investorRepository, CustomPasswordEncoder customPasswordEncoder, AuthenticationManager authenticationManager, JwtTokenProvider tokenService) {
         this.brokerRepository = brokerRepository;
         this.investorRepository = investorRepository;
         this.customPasswordEncoder = customPasswordEncoder;
