@@ -20,7 +20,7 @@ public class BrokerController {
         return brokerBusiness.getAllBrokers();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBroker(@PathVariable int id) {
         return brokerBusiness.deleteBroker(id);
     }

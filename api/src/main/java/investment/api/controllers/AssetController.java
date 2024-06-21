@@ -23,13 +23,13 @@ public class AssetController {
         return assetBusiness.getAssets(principal);
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public ResponseEntity createAsset(@RequestBody AssetDto asset, Principal principal) {
         return assetBusiness.createAsset(asset, principal);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBroker(@PathVariable int id) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteAsset(@PathVariable int id) {
         return assetBusiness.deleteAsset(id);
     }
 }

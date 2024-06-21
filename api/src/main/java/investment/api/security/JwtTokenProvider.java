@@ -26,8 +26,7 @@ public class JwtTokenProvider {
                 .setExpiration(expireDate)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
-        System.out.println("New token :");
-        System.out.println(token);
+
         return token;
     }
     public String getUsernameFromJWT(String token){
@@ -47,7 +46,7 @@ public class JwtTokenProvider {
                     .parseClaimsJws(token);
             return true;
         } catch (Exception ex) {
-            throw new AuthenticationCredentialsNotFoundException("JWT was exprired or incorrect",ex.fillInStackTrace());
+            throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect", ex.fillInStackTrace());
         }
     }
 
