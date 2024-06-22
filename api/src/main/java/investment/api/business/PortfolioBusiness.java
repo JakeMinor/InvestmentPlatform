@@ -1,7 +1,10 @@
 package investment.api.business;
 
+import investment.api.dtos.AssetDto;
 import investment.api.dtos.CreatePortfolioDto;
+import investment.api.dtos.PortfolioDto;
 import investment.api.dtos.UserDto;
+import investment.api.enums.AssetKindEnum;
 import investment.api.repositories.BrokerRepository;
 import investment.api.repositories.PortfolioRespository;
 import investment.api.repositories.entities.Broker;
@@ -15,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 
 @Service
 public class PortfolioBusiness {
@@ -25,6 +29,27 @@ public class PortfolioBusiness {
     public PortfolioBusiness(PortfolioRespository portfolioRepository, BrokerRepository brokerRepository) {
         this.portfolioRepository = portfolioRepository;
         this.brokerRepository = brokerRepository;
+    }
+
+    public Collection<PortfolioDto> getAllPortfolios(Authentication authentication) {
+        UserDto user = (UserDto) authentication.getPrincipal();
+
+        return portfolioRepository.findAllByInvestorId(
+                user.getInvestor().getId()
+        ).stream().map(portfolio ->
+            new PortfolioDto(
+                    portfolio.getCreation_date(),
+                    portfolio.getBroker().getCompany(),
+                    portfolio.getPortfolioAssets().stream().map(
+                            asset -> new AssetDto(
+                                    asset.getAsset_id(),
+                                    asset.getBroker().getId(),
+                                    AssetKindEnum.valueOf(asset.getKind()),
+                                    asset.getName()
+                            )
+                    ).toList()
+                )
+        ).toList();
     }
 
     public ResponseEntity createPortfolio(CreatePortfolioDto portfolio, Authentication authentication) {

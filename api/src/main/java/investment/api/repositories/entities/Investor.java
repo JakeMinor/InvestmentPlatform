@@ -30,6 +30,7 @@ public class Investor {
     private byte[] passwordSalt;
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "investor")
+    @Getter
     private Collection<Portfolio> portfolios;
 
 
