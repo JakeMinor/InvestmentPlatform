@@ -1,6 +1,8 @@
 package investment.api.controllers;
 
+import investment.api.business.AssetBusiness;
 import investment.api.business.BrokerBusiness;
+import investment.api.dtos.AssetDto;
 import investment.api.repositories.entities.Broker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,27 @@ public class BrokerController {
     @Autowired
     BrokerBusiness brokerBusiness;
 
+    @Autowired
+    AssetBusiness assetBusiness;
+
     @GetMapping("/")
     public ResponseEntity<List<Broker>> getAllBrokers() {
         return brokerBusiness.getAllBrokers();
+    }
+
+    @GetMapping("/assets")
+    public ResponseEntity<List<AssetDto>> getAllAssets(Authentication authentication) {
+        return assetBusiness.getAssets(authentication);
+    }
+
+    @PostMapping("/create-asset")
+    public ResponseEntity createAsset(@RequestBody AssetDto asset, Authentication authentication) {
+        return assetBusiness.createAsset(asset, authentication);
+    }
+
+    @DeleteMapping("/delete-asset/{id}")
+    public ResponseEntity deleteAsset(@PathVariable int id) {
+        return assetBusiness.deleteAsset(id);
     }
 
     @DeleteMapping("/delete-profile")
