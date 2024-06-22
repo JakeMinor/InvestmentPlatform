@@ -3,6 +3,7 @@ package investment.api.controllers;
 import investment.api.business.AssetBusiness;
 import investment.api.dtos.AssetDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -19,13 +20,13 @@ public class AssetController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<AssetDto>> getAllAssets(Principal principal) {
-        return assetBusiness.getAssets(principal);
+    public ResponseEntity<List<AssetDto>> getAllAssets(Authentication authentication) {
+        return assetBusiness.getAssets(authentication);
     }
 
     @PostMapping("/create")
-    public ResponseEntity createAsset(@RequestBody AssetDto asset, Principal principal) {
-        return assetBusiness.createAsset(asset, principal);
+    public ResponseEntity createAsset(@RequestBody AssetDto asset, Authentication authentication) {
+        return assetBusiness.createAsset(asset, authentication);
     }
 
     @DeleteMapping("/delete/{id}")

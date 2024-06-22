@@ -8,6 +8,7 @@ import investment.api.repositories.entities.Asset;
 import investment.api.security.CustomUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -24,8 +25,8 @@ public class AssetBusiness {
         this.userDetailsService = userDetailsService;
     }
 
-    public ResponseEntity<List<AssetDto>> getAssets(Principal principal) {
-        UserDto user = userDetailsService.loadUserByUsername(principal.getName());
+    public ResponseEntity<List<AssetDto>> getAssets(Authentication authentication) {
+        UserDto user = (UserDto) authentication.getPrincipal();
 
         var assets = assetRepository.findAssetsByBroker_id(user.getBroker().getId())
                 .stream()
@@ -40,8 +41,8 @@ public class AssetBusiness {
         return new ResponseEntity<>(assets.toList(), HttpStatus.OK);
     }
 
-    public ResponseEntity createAsset(AssetDto asset, Principal principal) {
-        UserDto user = userDetailsService.loadUserByUsername(principal.getName());
+    public ResponseEntity createAsset(AssetDto asset, Authentication authentication) {
+        UserDto user = (UserDto) authentication.getPrincipal();
 
         assetRepository.save(new Asset(user.getBroker(), asset.getKind(), asset.getName()));
 
