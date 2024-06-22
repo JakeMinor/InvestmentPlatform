@@ -18,11 +18,6 @@ public class InvestorController {
     @Autowired
     private PortfolioBusiness portfolioBusiness;
 
-    @DeleteMapping("/delete-profile")
-    public ResponseEntity deleteInvestor(Authentication authentication) {
-        return investorBusiness.deleteInvestor(authentication);
-    }
-
     @GetMapping("/get-profile")
     public ResponseEntity getInvestor(Authentication authentication) {
         return investorBusiness.getInvestorProfile(authentication);
@@ -31,5 +26,15 @@ public class InvestorController {
     @PostMapping("/create-portfolio")
     public ResponseEntity createPortfolio(@RequestBody CreatePortfolioDto portfolio, Authentication authentication) {
         return portfolioBusiness.createPortfolio(portfolio, authentication);
+    }
+
+    @DeleteMapping("/delete-profile")
+    public ResponseEntity deleteInvestor(Authentication authentication) {
+        return investorBusiness.deleteInvestor(authentication);
+    }
+
+    @DeleteMapping("/sell-portfolio/{id}")
+    public ResponseEntity sellPortfolio(@PathVariable int id, Authentication authentication) {
+        return portfolioBusiness.sellPortfolio(id, authentication);
     }
 }

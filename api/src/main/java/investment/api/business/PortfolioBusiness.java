@@ -6,6 +6,7 @@ import investment.api.dtos.PortfolioDto;
 import investment.api.dtos.UserDto;
 import investment.api.enums.AssetKindEnum;
 import investment.api.repositories.BrokerRepository;
+import investment.api.repositories.InvestorRepository;
 import investment.api.repositories.PortfolioRespository;
 import investment.api.repositories.entities.Broker;
 import investment.api.repositories.entities.Portfolio;
@@ -15,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,10 +25,12 @@ public class PortfolioBusiness {
 
     private final PortfolioRespository portfolioRepository;
     private final BrokerRepository brokerRepository;
+    private final InvestorRepository investorRepository;
 
-    public PortfolioBusiness(PortfolioRespository portfolioRepository, BrokerRepository brokerRepository) {
+    public PortfolioBusiness(PortfolioRespository portfolioRepository, BrokerRepository brokerRepository, InvestorRepository investorRepository) {
         this.portfolioRepository = portfolioRepository;
         this.brokerRepository = brokerRepository;
+        this.investorRepository = investorRepository;
     }
 
     public Collection<PortfolioDto> getAllPortfolios(Authentication authentication) {
@@ -65,5 +67,20 @@ public class PortfolioBusiness {
         portfolioRepository.save(new Portfolio(broker, user.getInvestor(), new ArrayList<>(), LocalDateTime.now()));
 
         return new ResponseEntity("Portfolio Created", HttpStatus.CREATED);
+    }
+
+    public ResponseEntity sellPortfolio(int id, Authentication authentication) {
+        UserDto user = (UserDto) authentication.getPrincipal();
+
+        if(!investorRepository.existsById(user.getInvestor().getId())) {
+            return new ResponseEntity<>("Investor doesn't exist.", HttpStatus.BAD_REQUEST);
+        }
+        else if(!portfolioRepository.existsById(id)) {
+            return new ResponseEntity<>("Portfolio doesn't exist.", HttpStatus.BAD_REQUEST);
+        }
+
+        portfolioRepository.deleteById(id);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
