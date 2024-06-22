@@ -2,6 +2,8 @@ package investment.api.controllers;
 
 import investment.api.business.InvestorBusiness;
 import investment.api.business.PortfolioBusiness;
+import investment.api.dtos.AddAssetToPortfolioDto;
+import investment.api.dtos.AssetDto;
 import investment.api.dtos.CreatePortfolioDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,11 @@ public class InvestorController {
     @PostMapping("/create-portfolio")
     public ResponseEntity createPortfolio(@RequestBody CreatePortfolioDto portfolio, Authentication authentication) {
         return portfolioBusiness.createPortfolio(portfolio, authentication);
+    }
+
+    @PostMapping("/add-asset")
+    public ResponseEntity addAssetToPortfolio(@RequestBody AddAssetToPortfolioDto asset, Authentication authentication) {
+        return portfolioBusiness.addAsset(asset, authentication);
     }
 
     @DeleteMapping("/delete-profile")

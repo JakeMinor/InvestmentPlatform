@@ -1,10 +1,8 @@
 package investment.api.business;
 
-import investment.api.dtos.AssetDto;
-import investment.api.dtos.CreatePortfolioDto;
-import investment.api.dtos.PortfolioDto;
-import investment.api.dtos.UserDto;
+import investment.api.dtos.*;
 import investment.api.enums.AssetKindEnum;
+import investment.api.repositories.AssetRepository;
 import investment.api.repositories.BrokerRepository;
 import investment.api.repositories.InvestorRepository;
 import investment.api.repositories.PortfolioRespository;
@@ -26,11 +24,13 @@ public class PortfolioBusiness {
     private final PortfolioRespository portfolioRepository;
     private final BrokerRepository brokerRepository;
     private final InvestorRepository investorRepository;
+    private final AssetRepository assetRepository;
 
-    public PortfolioBusiness(PortfolioRespository portfolioRepository, BrokerRepository brokerRepository, InvestorRepository investorRepository) {
+    public PortfolioBusiness(PortfolioRespository portfolioRepository, BrokerRepository brokerRepository, InvestorRepository investorRepository, AssetRepository assetRepository) {
         this.portfolioRepository = portfolioRepository;
         this.brokerRepository = brokerRepository;
         this.investorRepository = investorRepository;
+        this.assetRepository = assetRepository;
     }
 
     public Collection<PortfolioDto> getAllPortfolios(Authentication authentication) {
@@ -46,7 +46,7 @@ public class PortfolioBusiness {
                             asset -> new AssetDto(
                                     asset.getAsset_id(),
                                     asset.getBroker().getId(),
-                                    AssetKindEnum.valueOf(asset.getKind()),
+                                    AssetKindEnum.valueOf(asset.getKind().toUpperCase()),
                                     asset.getName()
                             )
                     ).toList()
@@ -82,5 +82,34 @@ public class PortfolioBusiness {
         portfolioRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity addAsset(AddAssetToPortfolioDto assetToAdd, Authentication authentication) {
+        UserDto user = (UserDto) authentication.getPrincipal();
+
+        if(!portfolioRepository.existsById(assetToAdd.portfolioId)) {
+            return new ResponseEntity<>("Portfolio doesn't exist.", HttpStatus.BAD_REQUEST);
+        }
+
+        if(!assetRepository.existsById(assetToAdd.assetId)) {
+            return new ResponseEntity<>("Asset doesn't exist.", HttpStatus.BAD_REQUEST);
+        }
+
+        var asset = assetRepository.findById(assetToAdd.assetId);
+        var portfolio = portfolioRepository.findById(assetToAdd.portfolioId);
+
+        if(asset.get().getBroker().getId() != portfolio.get().getBroker().getId()) {
+            return new ResponseEntity<>("Broker doesn't provide this Asset.", HttpStatus.BAD_REQUEST);
+        }
+
+        if(portfolio.get().getInvestor().getId() != user.getInvestor().getId()) {
+            return new ResponseEntity<>("User doesn't have portfolio with the id " + assetToAdd.assetId, HttpStatus.BAD_REQUEST);
+        }
+
+        portfolio.get().getPortfolioAssets().add(asset.get());
+
+        portfolioRepository.save(portfolio.get());
+
+        return new ResponseEntity("Asset Added", HttpStatus.OK);
     }
 }
