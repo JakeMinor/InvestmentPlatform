@@ -1,9 +1,11 @@
 package investment.api.business;
 
+import investment.api.dtos.UserDto;
 import investment.api.repositories.BrokerRepository;
 import investment.api.repositories.entities.Broker;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,12 +24,14 @@ public class BrokerBusiness {
         return new ResponseEntity<>(brokerRepository.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<String> deleteBroker(int brokerId) {
-        if(!brokerRepository.existsById(brokerId)) {
+    public ResponseEntity<String> deleteBroker(Authentication authentication) {
+        UserDto user = (UserDto) authentication.getPrincipal();
+
+        if(!brokerRepository.existsById(user.getBroker().getId())) {
             return new ResponseEntity<>("Broker doesn't exist.", HttpStatus.BAD_REQUEST);
         }
 
-        brokerRepository.deleteById(brokerId);
+        brokerRepository.deleteById(user.getBroker().getId());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

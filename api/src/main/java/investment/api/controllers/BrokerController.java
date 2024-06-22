@@ -4,6 +4,7 @@ import investment.api.business.BrokerBusiness;
 import investment.api.repositories.entities.Broker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class BrokerController {
         return brokerBusiness.getAllBrokers();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteBroker(@PathVariable int id) {
-        return brokerBusiness.deleteBroker(id);
+    @DeleteMapping("/delete-profile")
+    public ResponseEntity<String> deleteBroker(Authentication authentication) {
+        return brokerBusiness.deleteBroker(authentication);
     }
 }
