@@ -3,6 +3,8 @@ package investment.api.repositories.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.Collection;
+
 @Entity
 public class Investor {
 
@@ -26,6 +28,9 @@ public class Investor {
 
     @Getter
     private byte[] passwordSalt;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "investor")
+    private Collection<Portfolio> portfolios;
 
 
     public Investor() {}

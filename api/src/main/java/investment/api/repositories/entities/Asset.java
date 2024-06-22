@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collection;
+
 @Entity
 public class Asset {
 
@@ -24,6 +26,9 @@ public class Asset {
 
     @Getter
     private String name;
+
+    @ManyToMany(mappedBy = "portfolioAssets")
+    private Collection<Portfolio> assets;
 
     public Asset(Broker broker, AssetKindEnum kind, String name) {
         this.broker = broker;

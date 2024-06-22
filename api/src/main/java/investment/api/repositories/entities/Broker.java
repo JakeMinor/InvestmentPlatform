@@ -29,6 +29,9 @@ public class Broker {
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "broker")
     private Collection<Asset> assets;
 
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "broker")
+    private Collection<Portfolio> portfolios;
+
     public Broker() { }
     public Broker(String username, String company, byte[] passwordHash, byte[] passwordSalt) {
         this.username = username;
