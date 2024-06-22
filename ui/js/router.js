@@ -46,6 +46,10 @@ window.onload = function()
     {
         if($path == "") return;
 
+        if(localStorage.getItem("authentication_token") === null) {
+            $path = "login"
+        }
+
         const container = document.getElementById("container");
 
         const request = new XMLHttpRequest();
