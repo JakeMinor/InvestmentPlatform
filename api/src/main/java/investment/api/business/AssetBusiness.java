@@ -54,6 +54,12 @@ public class AssetBusiness {
             return new ResponseEntity<>("Asset doesn't exist.", HttpStatus.BAD_REQUEST);
         }
 
+        var asset = assetRepository.findById(id);
+
+        if(!asset.get().getPortfolios().isEmpty()) {
+            return new ResponseEntity<>("Cannot delete Asset as it belongs to a Portfolio.", HttpStatus.BAD_REQUEST);
+        }
+
         assetRepository.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);

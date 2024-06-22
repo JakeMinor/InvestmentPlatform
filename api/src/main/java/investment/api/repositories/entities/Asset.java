@@ -27,8 +27,9 @@ public class Asset {
     @Getter
     private String name;
 
-    @ManyToMany(mappedBy = "portfolioAssets")
-    private Collection<Portfolio> assets;
+    @ManyToMany(mappedBy = "portfolioAssets", fetch = FetchType.EAGER)
+    @Getter
+    private Collection<Portfolio> portfolios;
 
     public Asset(Broker broker, AssetKindEnum kind, String name) {
         this.broker = broker;

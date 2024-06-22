@@ -57,7 +57,7 @@ public class PortfolioBusiness {
     public ResponseEntity createPortfolio(CreatePortfolioDto portfolio, Authentication authentication) {
 
         if(!brokerRepository.existsById(portfolio.getBrokerId())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Broker doesn't exist.");
+            return new ResponseEntity("Broker doesn't exist.", HttpStatus.BAD_REQUEST);
         }
 
         Broker broker = brokerRepository.findById(portfolio.getBrokerId());
