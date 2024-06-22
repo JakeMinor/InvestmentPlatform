@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
@@ -40,5 +41,16 @@ public class Portfolio {
 
     @Getter
     @Setter
-    private Date creation_date;
+    private LocalDateTime creation_date;
+
+    public Portfolio(Broker broker, Investor investor, Collection<Asset> portfolioAssets, LocalDateTime creation_date) {
+        this.broker = broker;
+        this.investor = investor;
+        this.portfolioAssets = portfolioAssets;
+        this.creation_date = creation_date;
+    }
+
+    public Portfolio() {
+
+    }
 }

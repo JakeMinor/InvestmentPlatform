@@ -10,5 +10,7 @@ import java.util.Optional;
 @Repository
 public interface BrokerRepository extends JpaRepository<Broker, Integer> {
     Broker findByUsername(String username);
+    Broker findById(int id);
     Boolean existsByUsername(String username);
+    Boolean existsById(int id);
 }
