@@ -6,6 +6,7 @@ import investment.api.dtos.AssetDto;
 import investment.api.repositories.entities.Broker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,16 +32,19 @@ public class BrokerController {
         return assetBusiness.getAssets(authentication);
     }
 
+    @PreAuthorize("hasRole('BROKER')")
     @PostMapping("/create-asset")
     public ResponseEntity createAsset(@RequestBody AssetDto asset, Authentication authentication) {
         return assetBusiness.createAsset(asset, authentication);
     }
 
+    @PreAuthorize("hasRole('BROKER')")
     @DeleteMapping("/delete-asset/{id}")
     public ResponseEntity deleteAsset(@PathVariable int id) {
         return assetBusiness.deleteAsset(id);
     }
 
+    @PreAuthorize("hasRole('BROKER')")
     @DeleteMapping("/delete-profile")
     public ResponseEntity<String> deleteBroker(Authentication authentication) {
         return brokerBusiness.deleteBroker(authentication);

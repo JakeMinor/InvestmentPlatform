@@ -7,10 +7,13 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class CustomAuthenticationProviderService implements AuthenticationManager {
 
@@ -44,6 +47,4 @@ public class CustomAuthenticationProviderService implements AuthenticationManage
 
         return new UsernamePasswordAuthenticationToken(authentication.getName(), authentication.getCredentials().toString());
     }
-
-
 }
