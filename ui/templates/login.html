@@ -1,7 +1,14 @@
 <h1>Login</h1>
 
-<input id="username" />
-<input id="password" type="password" />
+<label for="username">Username</label>
+<input id="username" placeholder="Username..." />
+<span id="username-error"></span>
+
+<label for="password">Password</label>
+<input id="password" type="password" placeholder="Password..." />
+<span id="password-error"></span>
+
+<label for="userType">User Type</label>
 <select id="userType">
     <option value="BROKER">Broker</option>
     <option value="INVESTOR">Investor</option>

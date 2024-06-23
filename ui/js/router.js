@@ -42,28 +42,29 @@ window.onload = function()
         });
     });
 
-    function loadPage($path)
+
+}
+
+export function loadPage($path)
+{
+    if($path == "") return;
+
+    if(sessionStorage.getItem("authentication_token") === null) {
+        $path = "login"
+    }
+
+    const container = document.getElementById("container");
+
+    const request = new XMLHttpRequest();
+    request.open("GET", "/InvestmentPlatform/ui/templates/" + $path + ".html");
+    request.send();
+    request.onload = function()
     {
-        if($path == "") return;
-
-        if(localStorage.getItem("authentication_token") === null) {
-            $path = "login"
-        }
-
-        const container = document.getElementById("container");
-
-        const request = new XMLHttpRequest();
-        request.open("GET", "/InvestmentPlatform/ui/templates/" + $path + ".html");
-        request.send();
-        request.onload = function()
+        if(request.status == 200)
         {
-            if(request.status == 200)
-            {
-                console.log(request.responseText)
-                container.innerHTML = request.responseText;
-                document.title = "Investment Platform | " + $path;
-                loadJS($path)
-            }
+            container.innerHTML = request.responseText;
+            document.title = "Investment Platform | " + $path;
+            loadJS($path)
         }
     }
 }
@@ -72,8 +73,6 @@ function loadJS(route, async = true) {
 
     const id = route + "-script"
     let scriptTags = Array.from(document.getElementsByTagName("script"))
-
-    console.log(scriptTags)
 
     scriptTags.forEach(function(scriptTag) {
         if(scriptTag.id !== id && scriptTag.id !== 'router') {
@@ -85,7 +84,7 @@ function loadJS(route, async = true) {
 
     scriptEle.id = id
     scriptEle.setAttribute("src",  "/InvestmentPlatform/ui/js/" + route + ".js");
-    scriptEle.setAttribute("type", "text/javascript");
+    scriptEle.setAttribute("type", "module");
     scriptEle.setAttribute("async", async);
 
     document.body.appendChild(scriptEle);
