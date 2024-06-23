@@ -5,16 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/table.css">
+    <link rel="stylesheet" href="./css/utilities.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <title>Investment Platform</title>
 </head>
 <body>
     <div id="main">
-        <ul id="navbar">
-            <li class="menu__item" value="home">Home</li>
-            <li class="menu__item" value="portfolio">Portfolio</li>
-        </ul>
+        <div id="navbar" class="navbar">
+            <div class="app-name-container">
+                <div class="app-logo"></div>
+                <h2 class="app-name">Investment Platform</h2>
+            </div>
+            <ul class="links">
+                <li id="home-navlink" class="menu__item" value="">Home</li>
+                <li class="menu__item" value="portfolio">Portfolio</li>
+            </ul>
+        </div>
+
         <div id="container"></div>
     </div>
     <script id="router" src="./js/router.js" type="module" async></script>

@@ -4,6 +4,7 @@
 
 body {
     background-color: #f9f9f9;
+    margin: 0;
 }
 
 .invalid-input {
@@ -26,21 +27,60 @@ input, select {
 }
 
 .hide {
-    display: none;
-}
-
-.show {
-    display: flex;
+    display: none !important;
 }
 
 button {
-    margin-top: 16px;
-    background-color: #00a8e8;
-    border: #00a8e8 1px solid;
+    background-color: #007ea7;
+    border: #007ea7 1px solid;
     border-radius: 6px;
-    padding: 8px;
+    padding: 8px 16px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     color: white
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
 }

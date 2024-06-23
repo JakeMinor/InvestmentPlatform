@@ -1,3 +1,4 @@
+const baseUrl = "http://localhost:8080/api"
 
 export async function loginUser(username, password, userType) {
     let body = {
@@ -6,7 +7,7 @@ export async function loginUser(username, password, userType) {
         userType: userType
     }
 
-    return await fetch("http://localhost:8080/api/authentication/login", {
+    return await fetch(baseUrl + "/authentication/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -22,7 +23,7 @@ export async function registerBroker(username, password, companyName) {
         company: companyName
     }
 
-    return await fetch("http://localhost:8080/api/authentication/register-broker", {
+    return await fetch(baseUrl + "/authentication/register-broker", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -39,11 +40,24 @@ export async function registerInvestor(username, password, firstName, lastName) 
         lastName: lastName
     }
 
-    return await fetch("http://localhost:8080/api/authentication/register-investor", {
+    return await fetch(baseUrl + "/authentication/register-investor", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(body)
     })
+}
+
+export async function getAllAssets() {
+    return await fetch(baseUrl + "/broker/assets", {
+        method: "GET",
+        headers: {
+            "Authorization": getAuthorisationToken()
+        }
+    }).then(async (response) => JSON.parse(await response.text()))
+}
+
+function getAuthorisationToken() {
+    return "Bearer " + sessionStorage.getItem("authentication_token")
 }
