@@ -1,0 +1,51 @@
+<div id="login-container">
+    <h2 id="login-title">Register</h2>
+
+    <label id="userType-label" for="userType">User Type</label>
+    <select id="userType">
+        <option value="BROKER">Broker</option>
+        <option value="INVESTOR">Investor</option>
+    </select>
+
+    <h4 id="profile-details-title">Profile Details</h4>
+
+    <label id="username-label" for="username">Username</label>
+    <div id="username-container">
+        <input id="username" placeholder="Username..." />
+        <span id="username-error" class="error-message"></span>
+    </div>
+
+    <label id="password-label" for="password">Password</label>
+    <div id="password-container">
+        <input id="password" type="password" placeholder="Password..." />
+        <span id="password-error" class="error-message"></span>
+    </div>
+
+    <div>
+        <div id="register-investor">
+            <label id="first-name-label" for="first-name">First Name</label>
+            <div id="first-name-container">
+                <input id="first-name" placeholder="First Name" />
+            </div>
+
+            <label id="last-name-label" for="last-name">Last Name</label>
+            <div id="last-name-container">
+                <input id="last-name" placeholder="Last Name" />
+            </div>
+        </div>
+
+        <div id="register-broker">
+            <label id="company-label" for="company">Company Name</label>
+            <div id="company-container">
+                <input id="company" placeholder="Company Name" />
+                <span id="company-error" class="error-message"></span>
+            </div>
+        </div>
+    </div>
+
+    <a id="sign-in-button" class="link">Already have an account? Sign in</a>
+
+    <span id="user-details-error" class="error-message"></span>
+
+    <button id="submit">Login</button>
+</div>

@@ -6,17 +6,12 @@ window.onload = function()
     {
         case "":
         {
-            loadPage("home");
-            break;
-        }
-        case "about":
-        {
-            loadPage("about");
-            break;
-        }
-        case "pricing":
-        {
-            loadPage("pricing");
+            if(sessionStorage.getItem("role") === "BROKER") {
+                loadPage("broker-dashboard");
+            } else {
+                loadPage("investor-dashboard")
+            }
+
             break;
         }
         default:
@@ -32,7 +27,7 @@ window.onload = function()
         {
             const path = item.getAttribute("value");
             loadPage(path);
-            if(path == "home")
+            if(path === "broker-dashboard" || path === "investor-dashboard")
             {
                 window.history.pushState("", "", "/");
                 return;
@@ -49,7 +44,7 @@ export function loadPage($path)
 {
     if($path == "") return;
 
-    if(sessionStorage.getItem("authentication_token") === null) {
+    if(sessionStorage.getItem("authentication_token") === null && $path !== "register" && $path !== "login") {
         $path = "login"
     }
 
@@ -69,7 +64,7 @@ export function loadPage($path)
     }
 }
 
-function loadJS(route, async = true) {
+function loadJS(route) {
 
     const id = route + "-script"
     let scriptTags = Array.from(document.getElementsByTagName("script"))
@@ -83,9 +78,9 @@ function loadJS(route, async = true) {
     let scriptEle = document.createElement("script");
 
     scriptEle.id = id
-    scriptEle.setAttribute("src",  "/InvestmentPlatform/ui/js/" + route + ".js");
+    scriptEle.setAttribute("src",  "./js/" + route + ".js?" + Math.random());
     scriptEle.setAttribute("type", "module");
-    scriptEle.setAttribute("async", async);
+    scriptEle.async = true
 
-    document.body.appendChild(scriptEle);
+    document.body.insertBefore(scriptEle, document.body.lastChild);
 }

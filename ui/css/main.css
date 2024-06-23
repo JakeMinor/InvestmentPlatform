@@ -2,6 +2,10 @@
     font-family: 'inter', sans-serif;
 }
 
+body {
+    background-color: #f9f9f9;
+}
+
 .invalid-input {
     border-color: red;
 }
@@ -10,18 +14,7 @@
     color: red;
 }
 
-.navbar {
-    &.show {
-        display: block;
-    }
-
-    &.hide {
-        display: none;
-    }
-}
-
 #container {
-    background-color: #f9f9f9;
     display: flex;
     min-height: 100vh;
 }
@@ -30,4 +23,12 @@ input, select {
     padding: 8px;
     border: #777777 1px solid;
     border-radius: 6px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: flex;
 }

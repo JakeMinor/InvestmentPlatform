@@ -13,14 +13,29 @@
     padding: 16px;
 }
 
-#username-label, #password-label, #userType-label {
+#username-label, #password-label, #userType-label, #first-name-label, #last-name-label, #company-label {
     margin-bottom: 8px;
 }
 
-#username-container, #password-container, #userType {
+#username-container, #password-container, #userType, #last-name-container, #first-name-container, #company-container {
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
+}
+
+#profile-details-title {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+#register-investor, #register-broker {
+
+    &.hide {
+        display: none;
+    }
+
+    display: flex;
+    flex-direction: column;
 }
 
 #username-error, #password-error {
@@ -38,4 +53,11 @@
     font-weight: bold;
     cursor: pointer;
     color: white
+}
+
+.link {
+    cursor: pointer;
+    color: #007ea7;
+    text-decoration: underline;
+    font-size: 14px;
 }

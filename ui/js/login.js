@@ -6,9 +6,13 @@ document.getElementById('login-script').onload = function () {
     hideNavbar()
 
     document.getElementById('submit').addEventListener("click", login)
+
+    document.getElementById("register-button").addEventListener("click", redirectToRegister)
 }
 
 async function login() {
+    document.getElementById("user-details-error").innerText = "";
+
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     const userType = document.getElementById("userType").value;
@@ -18,39 +22,52 @@ async function login() {
     if(valid) {
         const response = await loginUser(username, password, userType)
 
-        sessionStorage.setItem("authentication_token", response)
+        if(response.ok) {
+            const token = await response.text()
 
-        const subject = decodeJwt(response).sub;
+            sessionStorage.setItem("authentication_token", token)
 
-        sessionStorage.setItem("username", subject.split(":")[0])
-        sessionStorage.setItem("role", subject.split(":")[1])
+            const subject = decodeJwt(token).sub;
+            const username = subject.split(":")[0]
+            const role = subject.split(":")[1]
 
-        loadPage("home")
+            sessionStorage.setItem("username", username)
+            sessionStorage.setItem("role", role)
+
+            if(role === "BROKER") {
+                loadPage("broker-dashboard")
+            } else {
+                loadPage("investor-dashboard")
+            }
+
+        } else {
+            document.getElementById("user-details-error").innerText = await response.text()
+        }
     }
+}
+
+async function redirectToRegister() {
+    loadPage("register")
 }
 
 function validateLoginForm(username, password) {
 
     document.getElementById("username").classList.remove('invalid-input')
     document.getElementById('username-error').innerText = ""
-    document.getElementById('username-error').classList.remove('error-message')
 
     document.getElementById("password").classList.remove('invalid-input')
     document.getElementById('password-error').innerText = ""
-    document.getElementById('password-error').classList.remove('error-message')
 
     if(username === "" || username === null || password === "" || password === null) {
 
         if(username === "" || username === null) {
             document.getElementById("username").classList.add('invalid-input')
             document.getElementById('username-error').innerText = "Username is required."
-            document.getElementById('username-error').classList.add('error-message')
         }
 
         if(password === "" || password === null) {
             document.getElementById("password").classList.add('invalid-input')
             document.getElementById('password-error').innerText = "Password is required."
-            document.getElementById('password-error').classList.add('error-message')
         }
 
         return false;
