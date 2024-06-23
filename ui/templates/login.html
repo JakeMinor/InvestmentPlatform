@@ -1,17 +1,24 @@
-<h1>Login</h1>
+<div id="login-container">
+    <h2 id="login-title">Login</h2>
+    <label id="username-label" for="username">Username</label>
+    <div id="username-container">
+        <input id="username" placeholder="Username..." />
+        <span id="username-error"></span>
+    </div>
 
-<label for="username">Username</label>
-<input id="username" placeholder="Username..." />
-<span id="username-error"></span>
 
-<label for="password">Password</label>
-<input id="password" type="password" placeholder="Password..." />
-<span id="password-error"></span>
+    <label id="password-label" for="password">Password</label>
+    <div id="password-container">
+        <input id="password" type="password" placeholder="Password..." />
+        <span id="password-error"></span>
+    </div>
 
-<label for="userType">User Type</label>
-<select id="userType">
-    <option value="BROKER">Broker</option>
-    <option value="INVESTOR">Investor</option>
-</select>
 
-<button id="submit">Login</button>
+    <label id="userType-label" for="userType">User Type</label>
+    <select id="userType">
+        <option value="BROKER">Broker</option>
+        <option value="INVESTOR">Investor</option>
+    </select>
+
+    <button id="submit">Login</button>
+</div>

@@ -1,3 +1,7 @@
+* {
+    font-family: 'inter', sans-serif;
+}
+
 .invalid-input {
     border-color: red;
 }
@@ -7,7 +11,6 @@
 }
 
 .navbar {
-
     &.show {
         display: block;
     }
@@ -15,4 +18,16 @@
     &.hide {
         display: none;
     }
+}
+
+#container {
+    background-color: #f9f9f9;
+    display: flex;
+    min-height: 100vh;
+}
+
+input, select {
+    padding: 8px;
+    border: #777777 1px solid;
+    border-radius: 6px;
 }
