@@ -43,18 +43,6 @@
     font-size: 12px;
 }
 
-#submit {
-    margin-top: 16px;
-    background-color: #00a8e8;
-    border: #00a8e8 1px solid;
-    border-radius: 6px;
-    padding: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    color: white
-}
-
 .link {
     cursor: pointer;
     color: #007ea7;

@@ -42,11 +42,16 @@ window.onload = function()
 
 export function loadPage($path)
 {
+    console.log($path)
+
     if($path == "") return;
 
     if(sessionStorage.getItem("authentication_token") === null && $path !== "register" && $path !== "login") {
         $path = "login"
     }
+
+    console.log($path)
+
 
     const container = document.getElementById("container");
 

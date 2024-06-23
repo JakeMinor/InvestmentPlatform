@@ -1,6 +1,6 @@
 import { loginUser } from "./api.js";
 import { loadPage } from "./router.js";
-import { hideNavbar } from "./utilities.js";
+import {hideNavbar, removeInvalidState, setFieldInvalid} from "./utilities.js";
 
 document.getElementById('login-script').onload = function () {
     hideNavbar()
@@ -51,23 +51,17 @@ async function redirectToRegister() {
 }
 
 function validateLoginForm(username, password) {
-
-    document.getElementById("username").classList.remove('invalid-input')
-    document.getElementById('username-error').innerText = ""
-
-    document.getElementById("password").classList.remove('invalid-input')
-    document.getElementById('password-error').innerText = ""
+    removeInvalidState("username")
+    removeInvalidState("password")
 
     if(username === "" || username === null || password === "" || password === null) {
 
         if(username === "" || username === null) {
-            document.getElementById("username").classList.add('invalid-input')
-            document.getElementById('username-error').innerText = "Username is required."
+            setFieldInvalid("username", "Username is required.")
         }
 
         if(password === "" || password === null) {
-            document.getElementById("password").classList.add('invalid-input')
-            document.getElementById('password-error').innerText = "Password is required."
+            setFieldInvalid("password", "Password is required.")
         }
 
         return false;
