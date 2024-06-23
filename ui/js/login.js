@@ -42,6 +42,8 @@ async function login() {
 
         } else {
             document.getElementById("user-details-error").innerText = await response.text()
+            setFieldInvalid("username")
+            setFieldInvalid("password")
         }
     }
 }
