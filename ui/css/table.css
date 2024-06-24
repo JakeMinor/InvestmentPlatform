@@ -61,3 +61,8 @@
     max-width: 100px;
     word-wrap: break-word;
 }
+
+.table-container {
+    display: flex;
+    flex-direction: column;
+}

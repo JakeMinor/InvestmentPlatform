@@ -58,6 +58,15 @@ export async function getAllAssets() {
     }).then(async (response) => JSON.parse(await response.text()))
 }
 
+export async function deleteAsset(id) {
+    return await fetch(baseUrl + "/broker/delete-asset/" + id, {
+        method: "DELETE",
+        headers: {
+            "Authorization": getAuthorisationToken()
+        }
+    })
+}
+
 function getAuthorisationToken() {
     return "Bearer " + sessionStorage.getItem("authentication_token")
 }
