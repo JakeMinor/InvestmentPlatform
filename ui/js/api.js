@@ -104,3 +104,12 @@ export async function getInvestorsPortfolios() {
         }
     }).then(async (response) => JSON.parse(await response.text()))
 }
+
+export async function sellPortfolio(id) {
+    return await fetch(baseUrl + "/investor/sell-portfolio/" + id, {
+        method: "DELETE",
+        headers: {
+            "Authorization": getAuthorisationToken()
+        }
+    })
+}
