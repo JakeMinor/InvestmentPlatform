@@ -67,6 +67,22 @@ export async function deleteAsset(id) {
     })
 }
 
+export async function addAsset(name, kind) {
+    const body = {
+        name: name,
+        kind: kind
+    }
+
+    return await fetch(baseUrl + "/broker/create-asset", {
+        method: "POST",
+        headers: {
+            "Authorization": getAuthorisationToken(),
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    })
+}
+
 function getAuthorisationToken() {
     return "Bearer " + sessionStorage.getItem("authentication_token")
 }

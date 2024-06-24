@@ -41,6 +41,13 @@ button {
     color: white
 }
 
+.link {
+    cursor: pointer;
+    color: #007ea7;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
 .page-container {
     display: flex;
     flex-direction: column;

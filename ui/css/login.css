@@ -13,10 +13,6 @@
     padding: 16px;
 }
 
-#username-label, #password-label, #userType-label, #first-name-label, #last-name-label, #company-label {
-    margin-bottom: 8px;
-}
-
 #username-container, #password-container, #userType, #last-name-container, #first-name-container, #company-container {
     display: flex;
     flex-direction: column;
@@ -43,9 +39,3 @@
     font-size: 12px;
 }
 
-.link {
-    cursor: pointer;
-    color: #007ea7;
-    text-decoration: underline;
-    font-size: 14px;
-}

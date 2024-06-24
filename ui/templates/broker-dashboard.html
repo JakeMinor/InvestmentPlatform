@@ -3,7 +3,7 @@
     <h1>Broker Dashboard</h1>
 
     <div class="table-container">
-        <button class="ms-auto">Add Asset</button>
+        <button id="add-asset-button" class="ms-auto">Add Asset</button>
         <table id="asset-table" class="table table-bordered table-hover mt-4">
             <thead>
                 <th>Name</th>
@@ -24,7 +24,36 @@
                 <div class="toast-body" id="toast-body">
                 </div>
             </div>
+        </div>
+    </div>
 
+    <div class="modal fade" id="add-asset-modal" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="add-asset-modal-title">Add Asset</h3>
+                </div>
+                <div class="modal-body">
+                    <label id="asset-name-label" for="asset-name">Name</label>
+                    <div id="asset-name-container" class="mb-3 ">
+                        <input id="asset-name" placeholder="Name" />
+                        <span id="asset-name-error" class="error-message"></span>
+                    </div>
+
+                    <label id="asset-type-label" for="asset-type">User Type</label>
+                    <select id="asset-type" class="w-100">
+                        <option value="SHARE">Share</option>
+                        <option value="BOND">Bond</option>
+                    </select>
+
+                    <span id="asset-error" class="error-message"></span>
+
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-close" type="button" class="btn btn-secondary me-2">Close</button>
+                    <button id="modal-save" type="button" class="ms-2">Save Asset</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

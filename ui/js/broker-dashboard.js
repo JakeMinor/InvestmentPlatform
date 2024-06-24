@@ -1,9 +1,10 @@
-import { showNavbar } from './utilities.js'
-import { getAllAssets, deleteAsset } from './api.js'
+import { removeInvalidState, setFieldInvalid, showNavbar } from './utilities.js'
+import {getAllAssets, deleteAsset, addAsset} from './api.js'
 
 document.getElementById('broker-dashboard-script').onload = async function () {
     document.getElementById("container").classList.add('container')
     document.getElementById('home-navlink').setAttribute("value", "broker-dashboard")
+    document.getElementById('add-asset-button').addEventListener('click', openAddAssetModal)
 
     showNavbar()
 
@@ -20,7 +21,7 @@ async function callDeleteAsset(id) {
     const response = await deleteAsset(id)
 
     if(response.ok) {
-        await getAllAssets()
+        await callGetAllAssets()
     } else {
         document.getElementById("toast-body").innerText = await response.text()
         document.getElementById("toast").classList.remove('hide')
@@ -29,8 +30,6 @@ async function callDeleteAsset(id) {
             document.getElementById("toast").classList.add("hide")
         }, 5000)
     }
-
-
 }
 
 async function callGetAllAssets() {
@@ -52,4 +51,55 @@ async function callGetAllAssets() {
             callDeleteAsset(event.target.id)
         });
     })
+}
+
+function openAddAssetModal() {
+    document.getElementById("add-asset-modal").classList.add("show")
+
+    document.getElementById("modal-close").addEventListener('click', closeModal)
+
+    document.getElementById("modal-save").addEventListener('click', saveAsset)
+}
+
+function closeModal() {
+    document.getElementById("add-asset-modal").classList.remove("show")
+
+    document.getElementById("asset-name").value = ""
+    document.getElementById("asset-type").value = "SHARE"
+}
+
+async function saveAsset() {
+    const assetName = document.getElementById("asset-name").value
+    const assetType = document.getElementById("asset-type").value
+
+    const valid = validateAsset(assetName)
+
+    if(valid) {
+        const response = await addAsset(assetName, assetType)
+
+        if(response.ok) {
+            closeModal()
+
+            await callGetAllAssets()
+        } else {
+            document.getElementById("asset-error").innerText = await response.text()
+            setFieldInvalid("asset-name")
+            setFieldInvalid("asset-type")
+        }
+    }
+}
+
+function validateAsset(assetName) {
+    removeInvalidState("asset-name")
+
+    if(assetName === "" || assetName === null) {
+
+        if(assetName === "" || assetName === null) {
+            setFieldInvalid("asset-name", "Asset Name is required.")
+        }
+
+        return false;
+    }
+
+    return true;
 }
