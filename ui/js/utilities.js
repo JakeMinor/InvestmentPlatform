@@ -16,3 +16,7 @@ export function removeInvalidState(id) {
     document.getElementById(id).classList.remove('invalid-input')
     document.getElementById(id + '-error').innerText = ""
 }
+
+export function formatKind(kind) {
+    return kind.charAt(0).toUpperCase() + kind.slice(1).toLowerCase();
+}

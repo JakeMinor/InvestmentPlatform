@@ -1,5 +1,9 @@
 const baseUrl = "http://localhost:8080/api"
 
+function getAuthorisationToken() {
+    return "Bearer " + sessionStorage.getItem("authentication_token")
+}
+
 export async function loginUser(username, password, userType) {
     let body = {
         username: username,
@@ -83,6 +87,20 @@ export async function addAsset(name, kind) {
     })
 }
 
-function getAuthorisationToken() {
-    return "Bearer " + sessionStorage.getItem("authentication_token")
+export async function getInvestorProfile() {
+    return await fetch(baseUrl + "/investor/profile", {
+        method: "GET",
+        headers: {
+            "Authorization": getAuthorisationToken()
+        }
+    }).then(async (response) => JSON.parse(await response.text()))
+}
+
+export async function getInvestorsPortfolios() {
+    return await fetch(baseUrl + "/investor/", {
+        method: "GET",
+        headers: {
+            "Authorization": getAuthorisationToken()
+        }
+    }).then(async (response) => JSON.parse(await response.text()))
 }

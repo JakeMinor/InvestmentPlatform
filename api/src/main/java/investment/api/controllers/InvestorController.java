@@ -5,6 +5,7 @@ import investment.api.business.PortfolioBusiness;
 import investment.api.dtos.AddAssetToPortfolioDto;
 import investment.api.dtos.CreatePortfolioDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -21,7 +22,13 @@ public class InvestorController {
     private PortfolioBusiness portfolioBusiness;
 
     @PreAuthorize("hasRole('INVESTOR')")
-    @GetMapping("/get-profile")
+    @GetMapping("/")
+    public ResponseEntity getPortfolios(Authentication authentication) {
+        return new ResponseEntity(portfolioBusiness.getAllPortfolios(authentication), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('INVESTOR')")
+    @GetMapping("/profile")
     public ResponseEntity getInvestor(Authentication authentication) {
         return investorBusiness.getInvestorProfile(authentication);
     }

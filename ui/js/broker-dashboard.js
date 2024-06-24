@@ -1,9 +1,8 @@
-import { removeInvalidState, setFieldInvalid, showNavbar } from './utilities.js'
+import { removeInvalidState, setFieldInvalid, showNavbar, formatKind } from './utilities.js'
 import {getAllAssets, deleteAsset, addAsset} from './api.js'
 
 document.getElementById('broker-dashboard-script').onload = async function () {
     document.getElementById("container").classList.add('container')
-    document.getElementById('home-navlink').setAttribute("value", "broker-dashboard")
     document.getElementById('add-asset-button').addEventListener('click', openAddAssetModal)
 
     showNavbar()
@@ -12,9 +11,6 @@ document.getElementById('broker-dashboard-script').onload = async function () {
 
 }
 
-function formatKind(kind) {
-    return kind.charAt(0).toUpperCase() + kind.slice(1).toLowerCase();
-}
 
 async function callDeleteAsset(id) {
 

@@ -1,1 +1,50 @@
-<h1>Investor Dashboard</h1>
+<div class="page-container">
+    <h1>Portfolios</h1>
+
+    <div class="investor-details-container p-3 mb-5">
+        <div class="investor-details-item pe-3">
+            <h4 class="m-0 mb-2">Name</h4>
+            <div id="investor-name"></div>
+        </div>
+
+        <div class="investor-details-item ps-3">
+            <h4 class="m-0 mb-2">Portfolio Count</h4>
+            <div id="portfolio-count"></div>
+        </div>
+
+    </div>
+
+    <div class="table-container">
+        <button id="create-portfolio-button" class="ms-auto">Create Portfolio</button>
+        <table id="portfolio-table" class="table table-bordered table-hover mt-4">
+            <thead>
+            <th>Broker Name</th>
+            <th>Created Date & Time</th>
+            <th>Action</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="view-asset-modal" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="view-modal-title">Portfolio Assets</h3>
+                </div>
+                <div class="modal-body">
+                    <table id="portfolio-asset-table" class="table table-bordered table-hover mt-4">
+                        <thead>
+                        <th>Name</th>
+                        <th>Kind</th>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button id="modal-close" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
