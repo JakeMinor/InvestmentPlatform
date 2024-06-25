@@ -37,7 +37,7 @@ window.onload = function()
         });
     });
 
-
+    document.getElementById('sign-out-navlink').addEventListener('click', signOut)
 }
 
 export function loadPage($path)
@@ -83,4 +83,11 @@ function loadJS(route) {
     scriptEle.async = true
 
     document.body.insertBefore(scriptEle, document.body.lastChild);
+}
+
+
+function signOut() {
+    sessionStorage.clear()
+
+    loadPage("login")
 }
