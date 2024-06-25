@@ -50,8 +50,8 @@ async function register() {
 
 
     } else {
-        const firstName = document.getElementById("company").value;
-        const lastName = document.getElementById("company").value;
+        const firstName = document.getElementById("first-name").value;
+        const lastName = document.getElementById("last-name").value;
 
         const valid = validateInvestorDetails(username, password, firstName, lastName)
 

@@ -40,6 +40,7 @@ public class PortfolioBusiness {
         ).stream().map(portfolio ->
             new PortfolioDto(
                     portfolio.getId(),
+                    portfolio.getBroker().getId(),
                     portfolio.getCreation_date(),
                     portfolio.getBroker().getCompany(),
                     portfolio.getPortfolioAssets().stream().map(

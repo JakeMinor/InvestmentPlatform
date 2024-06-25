@@ -1,5 +1,6 @@
 package investment.api.business;
 
+import investment.api.dtos.BrokerDto;
 import investment.api.dtos.UserDto;
 import investment.api.repositories.BrokerRepository;
 import investment.api.repositories.entities.Broker;
@@ -20,8 +21,13 @@ public class BrokerBusiness {
         this.brokerRepository = brokerRepository;
     }
 
-    public ResponseEntity<List<Broker>> getAllBrokers() {
-        return new ResponseEntity<>(brokerRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<BrokerDto>> getAllBrokers() {
+
+        var brokers = brokerRepository.findAll();
+
+        var brokerDtos = brokers.stream().map(br -> new BrokerDto(br.getId(), br.getUsername(), br.getCompany())).toList();
+
+        return new ResponseEntity<>(brokerDtos, HttpStatus.OK);
     }
 
     public ResponseEntity<String> deleteBroker(Authentication authentication) {

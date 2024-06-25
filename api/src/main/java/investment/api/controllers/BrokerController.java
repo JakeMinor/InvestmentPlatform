@@ -3,6 +3,7 @@ package investment.api.controllers;
 import investment.api.business.AssetBusiness;
 import investment.api.business.BrokerBusiness;
 import investment.api.dtos.AssetDto;
+import investment.api.dtos.BrokerDto;
 import investment.api.repositories.entities.Broker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,18 @@ public class BrokerController {
     AssetBusiness assetBusiness;
 
     @GetMapping("/")
-    public ResponseEntity<List<Broker>> getAllBrokers() {
+    public ResponseEntity<List<BrokerDto>> getAllBrokers() {
         return brokerBusiness.getAllBrokers();
     }
 
     @GetMapping("/assets")
     public ResponseEntity<List<AssetDto>> getAllAssets(Authentication authentication) {
         return assetBusiness.getAssets(authentication);
+    }
+
+    @GetMapping("/brokers-assets/{id}")
+    public ResponseEntity<List<AssetDto>> getBrokerAssetsById(@PathVariable int id) {
+        return assetBusiness.getAssetsByBrokerId(id);
     }
 
     @PreAuthorize("hasRole('BROKER')")

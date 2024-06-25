@@ -9,6 +9,8 @@
 .table td {
     padding: 0.75rem;
     vertical-align: top;
+    margin-top: auto;
+    margin-bottom: auto;
     border-top: 1px solid #dee2e6;
 }
 

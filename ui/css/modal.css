@@ -17,6 +17,7 @@
 .modal-dialog {
     position: relative;
     margin: auto;
+    min-width: 575px;
     pointer-events: none;
 }
 

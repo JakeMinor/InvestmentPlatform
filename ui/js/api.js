@@ -62,6 +62,24 @@ export async function getAllAssets() {
     }).then(async (response) => JSON.parse(await response.text()))
 }
 
+export async function getAllAssetsByBrokerId(id) {
+    return await fetch(baseUrl + "/broker/brokers-assets/" + id, {
+        method: "GET",
+        headers: {
+            "Authorization": getAuthorisationToken()
+        }
+    }).then(async (response) => JSON.parse(await response.text()))
+}
+
+export async function getAllBroker() {
+    return await fetch(baseUrl + "/broker/", {
+        method: "GET",
+        headers: {
+            "Authorization": getAuthorisationToken()
+        }
+    }).then(async (response) => JSON.parse(await response.text()))
+}
+
 export async function deleteAsset(id) {
     return await fetch(baseUrl + "/broker/delete-asset/" + id, {
         method: "DELETE",
@@ -111,5 +129,36 @@ export async function sellPortfolio(id) {
         headers: {
             "Authorization": getAuthorisationToken()
         }
+    })
+}
+
+export async function createPortfolio(brokerId) {
+    const body = {
+        brokerId: brokerId
+    }
+
+    return await fetch(baseUrl + "/investor/create-portfolio", {
+        method: "POST",
+        headers: {
+            "Authorization": getAuthorisationToken(),
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    })
+}
+
+export async function addAssetToPortfolio(assetId, portfolioId) {
+    const body = {
+        portfolioId: parseInt(portfolioId),
+        assetId: parseInt(assetId)
+    }
+
+    return await fetch(baseUrl + "/investor/add-asset", {
+        method: "POST",
+        headers: {
+            "Authorization": getAuthorisationToken(),
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
     })
 }

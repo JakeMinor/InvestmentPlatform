@@ -42,7 +42,43 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button id="modal-close" type="button">Close</button>
+                    <button id="view-asset-modal-close" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="create-portfolio-modal" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="create-portfolio-modal-title">Create Portfolio</h3>
+                </div>
+                <div class="modal-body">
+                    <label id="broker-label" for="broker">Broker</label>
+                    <select id="broker" class="w-100"></select>
+                </div>
+                <div class="modal-footer">
+                    <button id="create-portfolio-modal-close" class="btn-secondary me-2" type="button">Close</button>
+                    <button id="create-portfolio-modal-save" type="button">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="add-asset-to-portfolio-modal" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="add-asset-to-portfolio-title">Add Asset to Portfolio</h3>
+                </div>
+                <div class="modal-body">
+                    <label id="asset-label" for="asset">Asset</label>
+                    <select id="asset" class="w-100"></select>
+                </div>
+                <div class="modal-footer">
+                    <button id="add-asset-to-portfolio-modal-close" class="btn-secondary me-2" type="button">Close</button>
+                    <button id="add-asset-to-portfolio-modal-save" type="button">Save</button>
                 </div>
             </div>
         </div>

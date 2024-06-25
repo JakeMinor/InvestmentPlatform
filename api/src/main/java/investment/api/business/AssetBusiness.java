@@ -41,6 +41,14 @@ public class AssetBusiness {
         return new ResponseEntity<>(assets.toList(), HttpStatus.OK);
     }
 
+    public ResponseEntity<List<AssetDto>> getAssetsByBrokerId(int id) {
+        var assets = assetRepository.findAssetsByBroker_id(id);
+
+        var assetDto = assets.stream().map(asset -> new AssetDto(asset.getAsset_id(), asset.getBroker().getId(), AssetKindEnum.valueOf(asset.getKind().toUpperCase()), asset.getName())).toList();
+
+        return new ResponseEntity<>(assetDto, HttpStatus.OK);
+    }
+
     public ResponseEntity createAsset(AssetDto asset, Authentication authentication) {
         UserDto user = (UserDto) authentication.getPrincipal();
 

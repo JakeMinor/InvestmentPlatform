@@ -12,12 +12,15 @@ public class PortfolioDto {
 
     private LocalDateTime creationDate;
 
+    private int brokerId;
+
     private String companyName;
 
     private Collection<AssetDto> assets;
 
-    public PortfolioDto(int id, LocalDateTime creationDate, String companyName, Collection<AssetDto> assets) {
+    public PortfolioDto(int id, int brokerId, LocalDateTime creationDate, String companyName, Collection<AssetDto> assets) {
         this.id = id;
+        this.brokerId = brokerId;
         this.creationDate = creationDate;
         this.companyName = companyName;
         this.assets = assets;
