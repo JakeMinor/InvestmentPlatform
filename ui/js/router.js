@@ -51,7 +51,7 @@ export function loadPage($path)
     const container = document.getElementById("container");
 
     const request = new XMLHttpRequest();
-    request.open("GET", "/InvestmentPlatform/ui/templates/" + $path + ".html");
+    request.open("GET", "/templates/" + $path + ".html");
     request.send();
     request.onload = function()
     {

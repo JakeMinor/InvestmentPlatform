@@ -36,7 +36,7 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - ./web:/usr/share/nginx/html
+      - ./ui:/usr/share/nginx/html
     networks:
       - investment-network
 
