@@ -21,36 +21,42 @@ public class InvestorController {
     @Autowired
     private PortfolioBusiness portfolioBusiness;
 
+    // Check if user has Investor role
     @PreAuthorize("hasRole('INVESTOR')")
     @GetMapping("/")
     public ResponseEntity getPortfolios(Authentication authentication) {
         return new ResponseEntity(portfolioBusiness.getAllPortfolios(authentication), HttpStatus.OK);
     }
 
+    // Check if user has Investor role
     @PreAuthorize("hasRole('INVESTOR')")
     @GetMapping("/profile")
     public ResponseEntity getInvestor(Authentication authentication) {
         return investorBusiness.getInvestorProfile(authentication);
     }
 
+    // Check if user has Investor role
     @PreAuthorize("hasRole('INVESTOR')")
     @PostMapping("/create-portfolio")
     public ResponseEntity createPortfolio(@RequestBody CreatePortfolioDto portfolio, Authentication authentication) {
         return portfolioBusiness.createPortfolio(portfolio, authentication);
     }
 
+    // Check if user has Investor role
     @PreAuthorize("hasRole('INVESTOR')")
     @PostMapping("/add-asset")
     public ResponseEntity addAssetToPortfolio(@RequestBody AddAssetToPortfolioDto asset, Authentication authentication) {
         return portfolioBusiness.addAsset(asset, authentication);
     }
 
+    // Check if user has Investor role
     @PreAuthorize("hasRole('INVESTOR')")
     @DeleteMapping("/delete-profile")
     public ResponseEntity deleteInvestor(Authentication authentication) {
         return investorBusiness.deleteInvestor(authentication);
     }
 
+    // Check if user has Investor role
     @PreAuthorize("hasRole('INVESTOR')")
     @DeleteMapping("/sell-portfolio/{id}")
     public ResponseEntity sellPortfolio(@PathVariable int id, Authentication authentication) {

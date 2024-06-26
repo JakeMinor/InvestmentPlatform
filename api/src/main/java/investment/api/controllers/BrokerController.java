@@ -38,18 +38,21 @@ public class BrokerController {
         return assetBusiness.getAssetsByBrokerId(id);
     }
 
+    // Check if user has Broker role
     @PreAuthorize("hasRole('BROKER')")
     @PostMapping("/create-asset")
     public ResponseEntity createAsset(@RequestBody AssetDto asset, Authentication authentication) {
         return assetBusiness.createAsset(asset, authentication);
     }
 
+    // Check if user has Broker role
     @PreAuthorize("hasRole('BROKER')")
     @DeleteMapping("/delete-asset/{id}")
     public ResponseEntity deleteAsset(@PathVariable int id) {
         return assetBusiness.deleteAsset(id);
     }
 
+    // Check if user has Broker role
     @PreAuthorize("hasRole('BROKER')")
     @DeleteMapping("/delete-profile")
     public ResponseEntity<String> deleteBroker(Authentication authentication) {

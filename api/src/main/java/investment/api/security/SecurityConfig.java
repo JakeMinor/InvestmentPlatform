@@ -29,9 +29,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
+                // Add filter to check/distribute JWT token based on the authentication.
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                // Add cors configuration.
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                // Disable csrf.
                 .csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
+                // Allow anyone to hit any authentication endpoints.
                 .authorizeHttpRequests(
                         (requests) -> requests
                                 .requestMatchers("api/authentication/**")
@@ -39,10 +43,13 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 )
+                // Create session management to store JWT.
                 .sessionManagement(sessions -> sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 
+
+    // Create password encryption algorithm.
     @Bean
     public MessageDigest messageDigest() throws Exception {
         return MessageDigest.getInstance("MD5");
@@ -53,6 +60,7 @@ public class SecurityConfig {
         return new SecureRandom();
     }
 
+    // Create Custom Authentication manager using the custom userDetailsService and Password Encoder
     @Bean
     public AuthenticationManager authenticationManager() {
         return new CustomAuthenticationProviderService(userDetailsService(), passwordEncoder());
@@ -72,15 +80,16 @@ public class SecurityConfig {
         return new JWTAuthenticationFilter();
     }
 
+    // Configure cors.
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:8081")); // Allow UI origin
-        configuration.setAllowedMethods(Arrays.asList("*"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
+        configuration.setAllowedMethods(Arrays.asList("*")); // Allow all methods
+        configuration.setAllowedHeaders(Arrays.asList("*")); // Allow all header
+        configuration.setAllowCredentials(true); // Allow set credentials
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/**", configuration); // Register configuration on all routes.
 
         return source;
     }

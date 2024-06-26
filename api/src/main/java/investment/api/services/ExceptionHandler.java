@@ -12,11 +12,18 @@ public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleConversionFailedException(final RuntimeException e) {
+        // Check if exception contains AssetKindEnum.
         if (e.getCause().getMessage().contains(AssetKindEnum.class.getName())) {
+            // Return a 400 response and error message.
+
             return new ResponseEntity<>("The Asset Kind provided is not valid Asset type. Valid Asset types are: SHARE or BOND", HttpStatus.BAD_REQUEST);
-        } else if (e.getCause().getMessage().contains(UserTypeEnum.class.getName())) {
+        }
+        // Check if exception contains UserTypeEnum.
+        else if (e.getCause().getMessage().contains(UserTypeEnum.class.getName())) {
+            // Return a 400 response and error message.
             return new ResponseEntity<>("The User Type provided is not valid User Type. Valid User Types are: INVESTOR or BROKER", HttpStatus.BAD_REQUEST);
         } else {
+            // Return a 400 response and error message.
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

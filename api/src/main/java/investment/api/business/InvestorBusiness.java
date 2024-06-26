@@ -20,34 +20,38 @@ public class InvestorBusiness {
     }
 
     public ResponseEntity getInvestorProfile(Authentication authentication) {
+        // Get the User from the Authentication object.
         UserDto user = (UserDto) authentication.getPrincipal();
 
+        // Check if the user is an investor.
         if((user.getInvestor() == null)){
+            // Return a 400 response and error message.
             return new ResponseEntity<>("Investor doesn't exist.", HttpStatus.BAD_REQUEST);
         }
 
+        // Get all portfolios owned by the currently logged in user.
         var portfolios = portfolioBusiness.getAllPortfolios(authentication);
 
+        // Parse the user details and portfolios into an InvestorDto
+        var investor = new InvestorDto(user.getInvestor().getFirstname(), user.getInvestor().getLastname(), user.getInvestor().getUsername(), portfolios);
 
-        return new ResponseEntity<>(
-                new InvestorDto(
-                        user.getInvestor().getFirstname(),
-                        user.getInvestor().getLastname(),
-                        user.getInvestor().getUsername(),
-                        portfolios
-                ),
-                HttpStatus.OK);
+        // Return the InvestorDto with a 200 response.
+        return new ResponseEntity<>(investor, HttpStatus.OK);
     }
 
     public ResponseEntity<String> deleteInvestor(Authentication authentication) {
+        // Get the User from the Authentication object.
         UserDto user = (UserDto) authentication.getPrincipal();
 
+        // Check if the investor exists in the DB.
         if(!investorRepository.existsById(user.getInvestor().getId())) {
-            return new ResponseEntity<>("Broker doesn't exist.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Investor doesn't exist.", HttpStatus.BAD_REQUEST);
         }
 
+        // Delete the currently logged in broker from the DB.
         investorRepository.deleteById(user.getInvestor().getId());
 
+        // Return a 200 response.
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
